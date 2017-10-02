@@ -1,4 +1,3 @@
-# Using Decorators for PyQt5 Signal-Slot 
-
-
-## [Blog post](https://blog.manash.me/quick-pyqt5-1-signal-and-slot-example-in-pyqt5-bf502ccaf11d) 
+# Signal-Slot-Example 
+with Hardware Access via Rpi.GPIO added.
+Inspired by https://blog.manash.me

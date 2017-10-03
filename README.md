@@ -1,4 +1,4 @@
 # PyQt
 Tested with Raspbian Stretch.
 Install PyQt with:
-apt install python3-pyqt5
+'''apt install python3-pyqt5'''

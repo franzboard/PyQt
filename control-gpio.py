@@ -3,7 +3,7 @@
 """
 In this example, we connect a signal
 of a QSlider to a slot of a QLCDNumber 
-and to a slot of RpiGpio.
+and to a slot of RpiGpioOut.
 
 This shows how Qt interacts with
 Raspberry Pi GPIO pins
@@ -48,7 +48,7 @@ class ControlPanel(QWidget):
         self.valueChanged.emit(value)
 
 
-class RpiGpio(QObject): 
+class RpiGpioOut(QObject): 
     """ Control Raspberry Pi Hardware """  
     def __init__(self, pin):
         self.pin = pin
@@ -59,7 +59,7 @@ class RpiGpio(QObject):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.OUT)
         self.pwm = GPIO.PWM(self.pin, 50); 
-        self.pwm.start(50)
+        self.pwm.start(0)
         print("RpiGpio initialized!")  
          
     def cleanup(self):
@@ -76,7 +76,7 @@ class RpiGpio(QObject):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     panel = ControlPanel()
-    rpiPin = RpiGpio(18)
+    rpiPin = RpiGpioOut(25)
     panel.valueChanged.connect(rpiPin.set_value)
     ret = app.exec_()
     rpiPin.cleanup()

@@ -21,9 +21,8 @@ class Stopwatch(QObject):
         self.timer.setInterval(100)
         self.timer.timeout.connect(self.displayTime)
 
-
     @pyqtSlot()
-    def displayTime(self):
+    def displayTime(self):        
         t = QTime(0, 0, 0)
         displayTxt = t.addMSecs(self.delta.elapsed()).toString('hh:mm:ss')
         self.newTime.emit(displayTxt)

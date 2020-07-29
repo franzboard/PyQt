@@ -12,9 +12,9 @@ SYSFS_TEMP = "/sys/class/thermal/thermal_zone0/temp"
 
 import sys
 from os.path import abspath, dirname, join
-from PySide2.QtCore import QUrl, QObject, Slot
-from PySide2.QtGui import QGuiApplication
-from PySide2.QtQml import QQmlApplicationEngine
+from PyQt5.QtCore import QObject, pyqtSlot
+from PyQt5.QtGui import QGuiApplication
+from PyQt5.QtQml import QQmlApplicationEngine
 from gpiozero import LEDBoard, ButtonBoard
 
 from style_rc import * # material design
@@ -29,14 +29,14 @@ class Monitor(QObject):
 
     # slots are controlled by timer in monitor.qml
     # temperature from sysfs
-    @Slot(result=str)
+    @pyqtSlot(result=str)
     def getTemperature(self):
         with open(SYSFS_TEMP, 'rt') as fh:
             temp = int(fh.readline()) / 1000.0
         return str(round(temp)) + " °C"
 
     # outputs control LEDs
-    @Slot(int, result=int)
+    @pyqtSlot(int, result=int)
     def toggleLed(self, number):
         self.state[number] = 1 - self.state[number]
         if self.state[number] == 1:
@@ -46,7 +46,7 @@ class Monitor(QObject):
         return self.state[number]
 
     # input read buttons
-    @Slot(int, result=int)
+    @pyqtSlot(int, result=int)
     def readButton(self, number):
         return self.buttons[number].value
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     context = engine.rootContext()
     context.setContextProperty("con", monitor)
 
-    engine.load(QUrl("monitor.qml"))
+    engine.load("monitor.qml")
     if not engine.rootObjects():
         sys.exit(-1)
 
